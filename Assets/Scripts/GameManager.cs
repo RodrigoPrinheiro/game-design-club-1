@@ -16,13 +16,17 @@ public class GameManager : MonoBehaviour
     }
 
     [SerializeField] private PoemGenerator generator;
+    [SerializeField] private int linesPerPlayer = 4;
     [SerializeField] private UIManager ui;
+    public static event System.Action onFinishGame;
+
     private StringBuilder currentFullPoem;
     public static GameManager instance;
     public List<Player> players;
     private int playerCount;
     public string CurrentPoemFirstLine {get; private set;}
     public GameMode Mode {get; set;}
+    public int TotalLines {get; private set;}
     public bool AllPlayersReady => playerCount == players.Count;
     public int PlayersCount
     {
@@ -72,10 +76,16 @@ public class GameManager : MonoBehaviour
 
     public static void StartGame()
     {
+        instance.TotalLines = instance.playerCount * instance.linesPerPlayer;
         instance.currentFullPoem.Clear();
 
         instance.PickPoemStart();
         instance.ShowGamePanel();
+    }
+
+    public static void FinishGame()
+    {
+        onFinishGame?.Invoke();
     }
     
 }
