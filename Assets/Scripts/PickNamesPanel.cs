@@ -12,14 +12,7 @@ public class PickNamesPanel : MonoBehaviour
     [SerializeField] private Button[] colorButtons;
     [SerializeField] private TextMeshProUGUI currentPoet;
     private Button selectedColor;
-
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
-    private void Awake()
-    {
-        
-    }
+    public event System.Action onAllPlayersPicked;
 
     /// <summary>
     /// This function is called when the object becomes enabled and active.
@@ -54,7 +47,7 @@ public class PickNamesPanel : MonoBehaviour
         if (GameManager.instance.AllPlayersReady)
         {
             // Continue to game panel
-
+            GameManager.StartGame();
             return;
         }
         else

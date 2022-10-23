@@ -14,12 +14,14 @@ public class GameManager : MonoBehaviour
         Freestyle,
         HotPen
     }
-    private StringBuilder currentFullPoem;
 
+    [SerializeField] private PoemGenerator generator;
+    [SerializeField] private UIManager ui;
+    private StringBuilder currentFullPoem;
     public static GameManager instance;
     public List<Player> players;
     private int playerCount;
-    
+    public string CurrentPoemFirstLine {get; private set;}
     public GameMode Mode {get; set;}
     public bool AllPlayersReady => playerCount == players.Count;
     public int PlayersCount
@@ -54,6 +56,26 @@ public class GameManager : MonoBehaviour
     public void AddPlayer(string name, Color color)
     {
         players.Add(new Player() {name = name, color = color});
+    }
+
+    private void PickPoemStart()
+    {
+        Poem p = generator.SetNewPoem();
+        CurrentPoemFirstLine = generator.FirstLine;
+        currentFullPoem.Append(CurrentPoemFirstLine + "\n");
+    }
+
+    private void ShowGamePanel()
+    {
+        ui.ShowGamePanel();
+    }
+
+    public static void StartGame()
+    {
+        instance.currentFullPoem.Clear();
+
+        instance.PickPoemStart();
+        instance.ShowGamePanel();
     }
     
 }
