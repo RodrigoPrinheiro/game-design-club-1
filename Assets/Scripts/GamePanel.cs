@@ -21,7 +21,7 @@ public class GamePanel : MonoBehaviour
     public int currentPlayerTurn;
     public List<Image> hidePanels;
     private int createdLines = 0;
-
+    private float playerTimer;
     public int NextPlayer
     {
         get
@@ -62,6 +62,27 @@ public class GamePanel : MonoBehaviour
         InsertNewPlayerLine();
     }
 
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    private void Update()
+    {
+        if (!GameManager.GameRunning) return;
+        
+        if (GameManager.instance.IsHotPen)
+        {
+            playerTimer += Time.deltaTime;
+
+            float percent = playerTimer / GameManager.instance.MaxHotPenTime;
+            hotpenModeTimer.fillAmount = 1 - percent;
+
+            if (playerTimer >= GameManager.instance.MaxHotPenTime)
+            {
+                FinishGame();
+            }
+        }
+    }
+
     public void InsertNewPlayerLine()
     {
         currentPlayerInputField = Instantiate(playerLinePrefab, poemContent);
@@ -77,7 +98,7 @@ public class GamePanel : MonoBehaviour
         var stripe = Instantiate(hideStripePrefab, poemContent);
         stripe.rectTransform.sizeDelta = fieldToHide.sizeDelta;
         stripe.rectTransform.localPosition = fieldToHide.localPosition;
-        
+
         stripe.color = inputField.textComponent.color;
         stripe.rectTransform.localRotation = Quaternion.Euler(0, 0, Random.Range(-5f, 5f));
 
@@ -104,10 +125,10 @@ public class GamePanel : MonoBehaviour
 
         currentPlayerTurn = NextPlayer;
         currentPlayer = GameManager.instance.players[currentPlayerTurn];
-
+        
         previousLine = currentPlayerInputField.transform as RectTransform;
+        GameManager.instance.SetPoemLine(currentPlayerInputField.text);
         currentPlayerInputField = null;
-
         SetPlayerNames();
         InsertNewPlayerLine();
         createdLines++;
