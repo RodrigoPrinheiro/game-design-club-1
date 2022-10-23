@@ -94,6 +94,7 @@ public class GamePanel : MonoBehaviour
         currentPlayerInputField.inputField.fontAsset = playerFontAsset;
 
         currentPlayerInputField.inputField.Select();
+        currentPlayerInputField.inputField.onSelect.AddListener((s) => SubmitLine_ButtonCallback());
     }
 
     public void HideLine(RectTransform fieldToHide)
@@ -131,6 +132,7 @@ public class GamePanel : MonoBehaviour
         currentPlayer = GameManager.instance.players[currentPlayerTurn];
         
         previousLine = currentPlayerInputField.transform as RectTransform;
+        currentPlayerInputField.inputField.readOnly = true;
         GameManager.instance.SetPoemLine(currentPlayerInputField.text);
         currentPlayerInputField = null;
         SetPlayerNames();

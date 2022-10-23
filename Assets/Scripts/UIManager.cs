@@ -43,6 +43,7 @@ public class UIManager : MonoBehaviour
         activePanel.gameObject.SetActive(false);
         gamePanel.gameObject.SetActive(true);
 
+        activePanel = gamePanel;
     }
 
     public void PickPlayerNamesPanel_ButtonCallback()
