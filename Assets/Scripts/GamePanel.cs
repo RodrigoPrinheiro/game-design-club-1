@@ -51,6 +51,10 @@ public class GamePanel : MonoBehaviour
 
         var firstLine = Instantiate(playerLinePrefab, poemContent);
         firstLine.inputField.readOnly = true;
+        firstLine.inputField.characterLimit = 200;
+        firstLine.inputField.lineLimit = 200;
+        firstLine.inputField.textComponent.overflowMode = TextOverflowModes.Overflow;
+        firstLine.inputField.textComponent.maxVisibleLines = 2;
         firstLine.text = GameManager.instance.CurrentPoemFirstLine;
         previousLine = firstLine.transform as RectTransform;
         currentPlayerTurn = 0;

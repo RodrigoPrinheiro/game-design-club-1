@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerCountText;
     [SerializeField] private RectTransform playersNamePanel;
     [SerializeField] private RectTransform gamePanel;
+    [SerializeField] private RectTransform afterGame;
+    [SerializeField] private TextMeshProUGUI finalPoem;
 
     private RectTransform activePanel;
 
@@ -40,7 +42,7 @@ public class UIManager : MonoBehaviour
     {
         activePanel.gameObject.SetActive(false);
         gamePanel.gameObject.SetActive(true);
-        
+
     }
 
     public void PickPlayerNamesPanel_ButtonCallback()
@@ -53,6 +55,15 @@ public class UIManager : MonoBehaviour
     {
         GameManager.instance.PlayersCount++;
         playerCountText.text = GameManager.instance.PlayersCount.ToString();
+    }
+
+    public void AfterGamePanel(string poem)
+    {
+        activePanel.gameObject.SetActive(false);
+        afterGame.gameObject.SetActive(true);
+        activePanel = afterGame;
+
+        finalPoem.text = poem;
     }
 
     public void ReducePlayerCount_ButtonCallback()

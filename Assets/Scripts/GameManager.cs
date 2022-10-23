@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
     public static void FinishGame()
     {
         GameRunning = false;
+        instance.ui.AfterGamePanel(instance.currentFullPoem.ToString());
         onFinishGame?.Invoke();
     }
     
