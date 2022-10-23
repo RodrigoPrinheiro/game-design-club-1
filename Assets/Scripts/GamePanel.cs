@@ -94,7 +94,7 @@ public class GamePanel : MonoBehaviour
         currentPlayerInputField.inputField.fontAsset = playerFontAsset;
 
         currentPlayerInputField.inputField.Select();
-        currentPlayerInputField.inputField.onSelect.AddListener((s) => SubmitLine_ButtonCallback());
+        currentPlayerInputField.inputField.onSubmit.AddListener((s) => SubmitLine_ButtonCallback());
     }
 
     public void HideLine(RectTransform fieldToHide)
